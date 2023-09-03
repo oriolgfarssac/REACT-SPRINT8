@@ -38,10 +38,12 @@ const ShipList: React.FC = () => {
     | null
   >(null);
 
+  const [page, setPage] = useState<number>(1); // Track the current page
+
   useEffect(() => {
     const fetchShips = async () => {
       try {
-        const response = await fetch('https://swapi.py4e.com/api/starships/');
+        const response = await fetch(`https://swapi.py4e.com/api/starships/?page=${page}`);
         const data = await response.json();
         const listShips = data.results;
 
@@ -61,14 +63,14 @@ const ShipList: React.FC = () => {
           starship_class: ship.starship_class,
         }));
 
-        setShips(shipData);
+        setShips((prevShips) => [...prevShips, ...shipData]); // Append new ships to the existing list
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchShips();
-  }, []);
+  }, [page]); // Fetch data when the page changes
 
   const handleShowInfoClick = (ship: any) => {
     setSelectedShip(ship);
@@ -78,13 +80,17 @@ const ShipList: React.FC = () => {
     setSelectedShip(null);
   };
 
+  const handleLoadMoreClick = () => {
+    setPage((prevPage) => prevPage + 1); // Increment the page number to fetch the next page
+  };
+
   return (
     <div>
       <ul id='item'>
         {ships.map((ship, index) => (
           <li key={index} id='shiP'>
             <h3>{ship.name}</h3>
-            <button onClick={() => handleShowInfoClick(ship)}>Show Info</button>
+            <button onClick={() => handleShowInfoClick(ship)} id='Button'>Show Info</button>
             {selectedShip === ship && (
               <div className='shipContent'>
                 <p>Model: {ship.model}</p>
@@ -98,11 +104,13 @@ const ShipList: React.FC = () => {
                 <p>Hyperdrive_rating: {ship.hyperdrive_rating}</p>
                 <p>MGLT: {ship.MGLT}</p>
                 <p>Starship_class: {ship.starship_class}</p>
-                <button onClick={handleCloseInfoClick} id='closeButton'>Close Info</button>
+                <button onClick={handleCloseInfoClick} id='Button'>Close Info</button>
               </div>
             )}
           </li>
         ))}
+        <br />
+        <button onClick={handleLoadMoreClick}>Load More</button>
       </ul>
     </div>
   );
