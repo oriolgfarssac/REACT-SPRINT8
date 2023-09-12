@@ -38,7 +38,7 @@ const ShipList: React.FC = () => {
     | null
   >(null);
 
-  const [page, setPage] = useState<number>(1); // Track the current page
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     const fetchShips = async () => {
@@ -63,14 +63,14 @@ const ShipList: React.FC = () => {
           starship_class: ship.starship_class,
         }));
 
-        setShips((prevShips) => [...prevShips, ...shipData]); // Append new ships to the existing list
+        setShips((prevShips) => [...prevShips, ...shipData]);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchShips();
-  }, [page]); // Fetch data when the page changes
+  }, [page]);
 
   const handleShowInfoClick = (ship: any) => {
     setSelectedShip(ship);
@@ -81,7 +81,7 @@ const ShipList: React.FC = () => {
   };
 
   const handleLoadMoreClick = () => {
-    setPage((prevPage) => prevPage + 1); // Increment the page number to fetch the next page
+    setPage((prevPage) => prevPage + 1);
   };
 
   return (
