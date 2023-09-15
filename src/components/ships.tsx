@@ -16,6 +16,7 @@ const ShipList: React.FC = () => {
       hyperdrive_rating: string;
       MGLT: string;
       starship_class: string;
+      films: string;
     }>
   >([]);
 
@@ -34,6 +35,7 @@ const ShipList: React.FC = () => {
         hyperdrive_rating: string;
         MGLT: string;
         starship_class: string;
+        films: string;
       }
     | null
   >(null);
@@ -61,6 +63,7 @@ const ShipList: React.FC = () => {
           hyperdrive_rating: ship.hyperdrive_rating,
           MGLT: ship.MGLT,
           starship_class: ship.starship_class,
+          films: ship.films.title,
         }));
 
         setShips((prevShips) => [...prevShips, ...shipData]);
@@ -104,6 +107,7 @@ const ShipList: React.FC = () => {
                 <p>Hyperdrive_rating: {ship.hyperdrive_rating}</p>
                 <p>MGLT: {ship.MGLT}</p>
                 <p>Starship_class: {ship.starship_class}</p>
+                <p>Films: {ship.films}</p>
                 <button onClick={handleCloseInfoClick} id='Button'>Close Info</button>
               </div>
             )}
